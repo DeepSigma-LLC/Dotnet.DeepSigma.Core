@@ -32,5 +32,5 @@ public readonly struct AbsoluteValue<T>() where T : INumber<T>
     /// Implicit conversion from the underlying type.
     /// </summary>
     /// <param name="value"></param>
-    public static implicit operator AbsoluteValue<T>(T value) => new(value);
+    public static implicit operator AbsoluteValue<T>(T value) => new(value);    
 }

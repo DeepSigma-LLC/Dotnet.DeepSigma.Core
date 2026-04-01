@@ -20,6 +20,14 @@ public class AbsoluteValueProperty_Test
     }
 
     [Fact]
+    public void AbsoluteValueProperty_SetZeroValue_ValueRemainsZero()
+    {
+        AbsoluteValue<decimal> absoluteValue = 0;
+        Assert.Equal(0, absoluteValue.Value);
+    }
+
+
+    [Fact]
     public void AbsoluteValueProperty_TradeQuantity_SetNegativeValue_ValueIsAbsolute()
     {
         TradeTest trade = new()
