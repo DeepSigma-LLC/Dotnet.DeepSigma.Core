@@ -104,6 +104,36 @@ public static class IEnumerableExtension
     public static bool Empty<T>(this IEnumerable<T> source) => !source.Any();
 
     /// <summary>
+    /// Calculates the median of a sequence of integers.
+    /// </summary>
+    /// <param name="source">The sequence of integers.</param>
+    /// <returns>The median value.</returns>
+    public static T GetMedian<T>(this IEnumerable<T> source) where T : INumber<T>
+    {
+        // Convert to array and sort the copy to avoid modifying the original list
+        T[] temp = source.OrderBy(x => x).ToArray();
+        int count = temp.Length;
+
+        if (count == 0)
+        {
+            throw new InvalidOperationException("Cannot calculate median for an empty collection.");
+        }
+
+        // If the count is odd, the median is the middle element.
+        if (count % 2 != 0)
+        {
+            return temp[count / 2];
+        }
+        // If the count is even, the median is the average of the two middle elements.
+        else
+        {
+            int midIndex1 = count / 2 - 1;
+            int midIndex2 = count / 2;
+            return (temp[midIndex1] + temp[midIndex2]) / T.CreateChecked(2);
+        }
+    }
+
+    /// <summary>
     /// Gets the most common element from a collection.
     /// If no element is most common, such as in the case of a tie, returns default.
     /// Note: Elements must be comparable for grouping. This means that for custom types, Equals and GetHashCode should be properly overridden.
