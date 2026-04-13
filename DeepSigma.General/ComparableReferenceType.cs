@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General;
+namespace DeepSigma.Core;
 
 /// <summary>
 /// A reference type that implements value-based equality comparison.

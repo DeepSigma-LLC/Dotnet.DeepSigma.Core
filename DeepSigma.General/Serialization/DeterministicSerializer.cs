@@ -1,10 +1,10 @@
-﻿using DeepSigma.General;
-using DeepSigma.General.Utilities;
+﻿using DeepSigma.Core;
+using DeepSigma.Core.Utilities;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
-namespace DeepSigma.General.Serialization;
+namespace DeepSigma.Core.Serialization;
 
 /// <summary>
 /// Provides methods for deterministic serialization of objects to byte arrays and hashes.

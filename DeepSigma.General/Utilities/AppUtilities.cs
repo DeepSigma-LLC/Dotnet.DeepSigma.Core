@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Utilities;
+namespace DeepSigma.Core.Utilities;
 
 /// <summary>
 /// Utility class for application-related operations.

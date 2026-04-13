@@ -1,9 +1,9 @@
 ﻿using Xunit;
-using DeepSigma.General.Extensions;
-using DeepSigma.General.DateTimeUnification;
-using DeepSigma.General.TimeStepper;
+using DeepSigma.Core.Extensions;
+using DeepSigma.Core.DateTimeUnification;
+using DeepSigma.Core.TimeStepper;
 
-namespace DeepSigma.General.Tests.Tests.Extension;
+namespace DeepSigma.Core.Tests.Tests.Extension;
 
 public class Dictionary_Tests
 {

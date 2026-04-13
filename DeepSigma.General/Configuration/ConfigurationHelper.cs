@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace DeepSigma.General.Configuration;
+namespace DeepSigma.Core.Configuration;
 
 /// <summary>
 /// Helper class for loading configuration sections into strongly typed objects. Dependency injection method should be preferred but this is useful for some scenarios.

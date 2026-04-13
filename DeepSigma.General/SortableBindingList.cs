@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DeepSigma.General;
+namespace DeepSigma.Core;
 
 /// <summary>
 /// Provides a sortable binding list that can be used in data binding scenarios.

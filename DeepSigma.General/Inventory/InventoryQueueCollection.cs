@@ -1,6 +1,6 @@
-﻿using DeepSigma.General.Extensions;
+﻿using DeepSigma.Core.Extensions;
 
-namespace DeepSigma.General.Inventory;
+namespace DeepSigma.Core.Inventory;
 
 /// <summary>
 /// Implementation of custom inventory collection to achieve First-In-First-Out functionality under a consistent interface to an inventory stack.

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Numerics;
 
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Extension methods for IEnumerable collections.

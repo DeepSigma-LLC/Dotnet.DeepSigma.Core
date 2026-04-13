@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace DeepSigma.General.Utilities;
+namespace DeepSigma.Core.Utilities;
 
 /// <summary>
 /// Utility class for method-related operations.

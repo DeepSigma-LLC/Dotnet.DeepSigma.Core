@@ -1,6 +1,6 @@
-﻿using DeepSigma.General.DistributedData.Interface;
+﻿using DeepSigma.Core.DistributedData.Interface;
 
-namespace DeepSigma.General.DistributedData;
+namespace DeepSigma.Core.DistributedData;
 
 /// <summary>
 /// A counting Bloom filter. Implmentation enables bloom filter with deletions. Alternatively, you can use cuckoo filter.

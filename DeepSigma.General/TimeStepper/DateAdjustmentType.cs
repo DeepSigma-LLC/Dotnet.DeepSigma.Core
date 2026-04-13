@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DeepSigma.General.TimeStepper;
+namespace DeepSigma.Core.TimeStepper;
 
 /// <summary>
 /// Defines how to adjust dates that do not fall on valid time steps.

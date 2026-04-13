@@ -1,8 +1,8 @@
-﻿using DeepSigma.General.DateTimeUnification;
-using DeepSigma.General.Enums;
-using DeepSigma.General.Extensions;
+﻿using DeepSigma.Core.DateTimeUnification;
+using DeepSigma.Core.Enums;
+using DeepSigma.Core.Extensions;
 
-namespace DeepSigma.General.TimeStepper;
+namespace DeepSigma.Core.TimeStepper;
 
 /// <summary>
 /// Self-aligning time stepper <see cref="SelfAligningTimeStepper{T}"/> is a used to calculate time steps based on periodicity configuration.

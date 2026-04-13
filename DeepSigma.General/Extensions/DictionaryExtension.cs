@@ -1,9 +1,9 @@
-﻿using DeepSigma.General.Utilities;
+﻿using DeepSigma.Core.Utilities;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Extension methods for Dictionary operations.

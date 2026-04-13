@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Enums;
+namespace DeepSigma.Core.Enums;
 
 /// <summary>
 /// Enumeration for different types of rounding operations.

@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.Extensions.Logging;
 
-namespace DeepSigma.General
+namespace DeepSigma.Core
 {
     internal class LoggerTest
     {

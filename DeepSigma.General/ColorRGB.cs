@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General;
+namespace DeepSigma.Core;
 
 /// <summary>
 /// ColorRGB is a structure that represents a color in RGB format.

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace DeepSigma.General.Utilities;
+namespace DeepSigma.Core.Utilities;
 
 /// <summary>
 /// Utility class for object-related operations.

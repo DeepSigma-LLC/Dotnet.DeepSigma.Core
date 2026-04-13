@@ -1,9 +1,9 @@
-﻿using DeepSigma.General.DateTimeUnification;
-using DeepSigma.General.Extensions;
-using DeepSigma.General.TimeStepper;
+﻿using DeepSigma.Core.DateTimeUnification;
+using DeepSigma.Core.Extensions;
+using DeepSigma.Core.TimeStepper;
 using Xunit;
 
-namespace DeepSigma.General.Tests.Tests.Extension;
+namespace DeepSigma.Core.Tests.Tests.Extension;
 
 public class SortedDictionary_Tests
 {
@@ -44,9 +44,8 @@ public class SortedDictionary_Tests
             { new DateOnlyCustom(2025, 12, 16), null  }
         };
 
-        SelfAligningTimeStepper<DateOnlyCustom> timeStepper = new(
-            new PeriodicityConfiguration(Enums.Periodicity.Daily, Enums.DaySelectionType.Weekday)
-        );
+        TimeStepperConfiguration configuration = new(new PeriodicityConfiguration(Enums.Periodicity.Daily, Enums.DaySelectionType.Weekday));
+        SelfAligningTimeStepper<DateOnlyCustom> timeStepper = new(configuration);
 
         // Act
         var result = dict.RemoveInvalidDates(timeStepper);
@@ -71,7 +70,7 @@ public class SortedDictionary_Tests
             { new DateOnlyCustom(2025, 12, 30), 300.0m }
         };
 
-        PeriodicityConfiguration configuration = new(Enums.Periodicity.Daily, Enums.DaySelectionType.Any);
+        TimeStepperConfiguration configuration = new(new PeriodicityConfiguration(Enums.Periodicity.Daily, Enums.DaySelectionType.Any));
         var results = dict.FillMissingValuesByRolling(new SelfAligningTimeStepper<DateOnlyCustom>(configuration));
 
         Assert.Equal(21, results.Count);
@@ -95,7 +94,7 @@ public class SortedDictionary_Tests
             { new DateOnlyCustom(2025, 12, 30), 300.0m }
         };
 
-        PeriodicityConfiguration configuration = new(Enums.Periodicity.Daily, Enums.DaySelectionType.Any);
+        TimeStepperConfiguration configuration = new(new PeriodicityConfiguration(Enums.Periodicity.Daily, Enums.DaySelectionType.Any));
         var results = dict.FillMissingValuesWithNull(new SelfAligningTimeStepper<DateOnlyCustom>(configuration));
 
         Assert.Equal(21, results.Count);

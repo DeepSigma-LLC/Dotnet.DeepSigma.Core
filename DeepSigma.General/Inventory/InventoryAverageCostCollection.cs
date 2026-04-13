@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
-using DeepSigma.General.Extensions; 
+using DeepSigma.Core.Extensions; 
 
 
-namespace DeepSigma.General.Inventory;
+namespace DeepSigma.Core.Inventory;
 
 /// <summary>
 /// Implementation of custom inventory collection to achieve Average Cost functionality under a consistent interface to an inventory collection.

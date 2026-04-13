@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace DeepSigma.General.DistributedData;
+namespace DeepSigma.Core.DistributedData;
 
 /// <summary>
 /// Base class for Bloom filters.

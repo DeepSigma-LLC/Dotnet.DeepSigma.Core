@@ -1,7 +1,7 @@
-﻿using DeepSigma.General.Extensions;
+﻿using DeepSigma.Core.Extensions;
 using System.Collections;
 
-namespace DeepSigma.General;
+namespace DeepSigma.Core;
 
 /// <summary>
 /// An abstract base class for a generic unique collection of items of type T.

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace DeepSigma.General.Logging;
+namespace DeepSigma.Core.Logging;
 
 internal class LogUtilities
 {

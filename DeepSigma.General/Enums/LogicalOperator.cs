@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Enums;
+namespace DeepSigma.Core.Enums;
 
 /// <summary>
 /// Represents logical operators used in filtering or querying data.

@@ -1,8 +1,8 @@
 ﻿using Xunit;
-using DeepSigma.General;
-using DeepSigma.General.Tests.Models;
+using DeepSigma.Core;
+using DeepSigma.Core.Tests.Models;
 
-namespace DeepSigma.General.Tests.Tests;
+namespace DeepSigma.Core.Tests.Tests;
 
 public class UniqueCollection
 {

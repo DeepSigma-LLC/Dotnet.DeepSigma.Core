@@ -1,4 +1,4 @@
-﻿namespace DeepSigma.General.Extensions;
+﻿namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Extension methods for the <see cref="Guid"/> struct.

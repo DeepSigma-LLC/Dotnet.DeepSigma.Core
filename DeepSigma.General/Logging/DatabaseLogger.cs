@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using DeepSigma.General.Extensions;
+using DeepSigma.Core.Extensions;
 
-namespace DeepSigma.General.Logging;
+namespace DeepSigma.Core.Logging;
 
 /// <summary>
 /// A logger that writes log messages to a database.

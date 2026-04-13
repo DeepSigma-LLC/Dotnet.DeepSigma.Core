@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeepSigma.General\DeepSigma.General.csproj" />
+    <ProjectReference Include="..\DeepSigma.General\DeepSigma.Core.csproj" />
   </ItemGroup>
 
 </Project>

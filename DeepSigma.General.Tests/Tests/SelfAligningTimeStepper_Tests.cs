@@ -1,9 +1,9 @@
 ﻿using Xunit;
-using DeepSigma.General.TimeStepper;
-using DeepSigma.General.DateTimeUnification;
-using DeepSigma.General.Extensions;
+using DeepSigma.Core.TimeStepper;
+using DeepSigma.Core.DateTimeUnification;
+using DeepSigma.Core.Extensions;
 
-namespace DeepSigma.General.Tests.Tests;
+namespace DeepSigma.Core.Tests.Tests;
 
 public class SelfAligningTimeStepper_Tests
 {

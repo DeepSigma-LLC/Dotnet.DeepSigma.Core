@@ -1,7 +1,7 @@
-﻿using DeepSigma.General.Extensions;
+﻿using DeepSigma.Core.Extensions;
 using System.ComponentModel;
 
-namespace DeepSigma.General.DateTimeUnification;
+namespace DeepSigma.Core.DateTimeUnification;
 
 /// <summary>
 /// Represents a custom date object that encapsulates a DateOnly value.

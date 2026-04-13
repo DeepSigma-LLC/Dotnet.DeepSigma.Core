@@ -1,7 +1,7 @@
 ﻿using Xunit;
-using DeepSigma.General.DateTimeUnification;
+using DeepSigma.Core.DateTimeUnification;
 
-namespace DeepSigma.General.Tests.Tests;
+namespace DeepSigma.Core.Tests.Tests;
 
 
 public class TimeIntervalStepper

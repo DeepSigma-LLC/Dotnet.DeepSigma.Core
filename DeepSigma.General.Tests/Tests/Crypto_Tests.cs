@@ -1,8 +1,8 @@
 ﻿using Xunit;
-using DeepSigma.General.Utilities;
+using DeepSigma.Core.Utilities;
 using System.Security.Cryptography;
 
-namespace DeepSigma.General.Tests.Tests;
+namespace DeepSigma.Core.Tests.Tests;
 
 public class Crypto_Tests
 {

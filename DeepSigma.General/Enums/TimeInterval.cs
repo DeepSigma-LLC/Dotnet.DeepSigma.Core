@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Enums;
+namespace DeepSigma.Core.Enums;
 
 /// <summary>
 /// Represents various time intervals in minutes.

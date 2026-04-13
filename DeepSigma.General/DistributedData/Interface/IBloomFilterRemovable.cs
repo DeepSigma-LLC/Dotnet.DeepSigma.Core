@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.DistributedData.Interface;
+namespace DeepSigma.Core.DistributedData.Interface;
 
 /// <summary>
 /// Interface for a Bloom filter that supports item removal.

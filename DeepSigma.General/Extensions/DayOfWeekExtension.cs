@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Extension methods for DayOfWeek enum.

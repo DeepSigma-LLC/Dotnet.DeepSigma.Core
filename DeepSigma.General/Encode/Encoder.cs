@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Encode;
+namespace DeepSigma.Core.Encode;
 
 /// <summary>
 /// Provides methods for encoding and decoding byte arrays to and from strings using various encoding schemes.

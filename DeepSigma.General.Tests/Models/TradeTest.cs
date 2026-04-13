@@ -1,4 +1,4 @@
-﻿namespace DeepSigma.General.Tests.Models;
+﻿namespace DeepSigma.Core.Tests.Models;
 
 internal class TradeTest()
 {

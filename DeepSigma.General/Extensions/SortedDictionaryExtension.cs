@@ -1,8 +1,8 @@
-﻿using DeepSigma.General.DateTimeUnification;
-using DeepSigma.General.Enums;
-using DeepSigma.General.TimeStepper;
+﻿using DeepSigma.Core.DateTimeUnification;
+using DeepSigma.Core.Enums;
+using DeepSigma.Core.TimeStepper;
 
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Provides extension methods for SortedDictionary.

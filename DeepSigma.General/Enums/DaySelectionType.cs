@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Enums;
+namespace DeepSigma.Core.Enums;
 
 /// <summary>
 /// Represents the type of day selection for scheduling or filtering purposes.

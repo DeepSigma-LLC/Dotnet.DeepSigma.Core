@@ -1,6 +1,6 @@
 ﻿
 
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Provides extension methods for the Math class to support decimal types.

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace DeepSigma.General.Caching;
+namespace DeepSigma.Core.Caching;
 
 /// <summary>
 /// Represents a cached item with its value and expiration time.

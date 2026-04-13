@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Provides extension methods for double values, including conversions to decimal.

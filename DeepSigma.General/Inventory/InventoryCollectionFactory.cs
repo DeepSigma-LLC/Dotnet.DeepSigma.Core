@@ -1,6 +1,6 @@
-﻿using DeepSigma.General.Enums;
+﻿using DeepSigma.Core.Enums;
 
-namespace DeepSigma.General.Inventory;
+namespace DeepSigma.Core.Inventory;
 
 /// <summary>
 /// Factory for creating inventory collections based on accounting cost methodology

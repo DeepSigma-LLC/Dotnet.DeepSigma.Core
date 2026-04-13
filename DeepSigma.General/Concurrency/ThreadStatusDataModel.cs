@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 
-namespace DeepSigma.General.Concurrency;
+namespace DeepSigma.Core.Concurrency;
 
 /// <summary>
 /// Data model for tracking the status of a thread's execution.
@@ -58,12 +58,15 @@ public class ThreadStatusDataModel
 
     private Stopwatch _taskStopWatch = new();
 
+    private Thread _thread;
+
     /// <summary>
     /// Initializes task and class properties for current task execution.
     /// </summary>
     public void TaskStart()
     {
         StartDateTime = DateTime.Now;
+        _thread = Thread.CurrentThread;
         ExecutionManagedThreadId = Thread.CurrentThread.ManagedThreadId;
         CurrentThreadName = Thread.CurrentThread.Name;
         CurrentProcessorId = Thread.GetCurrentProcessorId();

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace DeepSigma.General.Concurrency;
+namespace DeepSigma.Core.Concurrency;
 
 /// <summary>
 /// Enables robust parellel method execution along with asyncronous progress reporting.
@@ -57,7 +57,7 @@ internal class ParellelTaskExecutionEngine<TMethodInput, TResult>
         List<TMethodInput> method_parameters, CancellationToken cancellation_token)
     {
         ConcurrentQueue<ThreadMethodResult<TResult>> TaskOutputResults = [];
-        await Task.Run(() =>
+        await Task.Run(cancellationToken: cancellation_token, action:() =>
         {
             Parallel.ForEach(method_parameters, parameters =>
             {

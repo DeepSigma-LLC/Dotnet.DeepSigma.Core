@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Provides extension methods for INumber types.

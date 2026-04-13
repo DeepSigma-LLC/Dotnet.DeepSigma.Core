@@ -1,8 +1,8 @@
 ﻿
-using DeepSigma.General.Enums;
+using DeepSigma.Core.Enums;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DeepSigma.General.TimeStepper;
+namespace DeepSigma.Core.TimeStepper;
 
 /// <summary>
 /// Configuration for time stepping operations.

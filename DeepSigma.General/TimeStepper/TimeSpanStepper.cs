@@ -1,7 +1,7 @@
-﻿using DeepSigma.General.DateTimeUnification;
-using DeepSigma.General.Enums;
+﻿using DeepSigma.Core.DateTimeUnification;
+using DeepSigma.Core.Enums;
 
-namespace DeepSigma.General.TimeStepper;
+namespace DeepSigma.Core.TimeStepper;
 
 /// <summary>
 /// Provides functionality to step through <see cref="IDateTime{T}"/> values based on a specified TimeSpan interval.

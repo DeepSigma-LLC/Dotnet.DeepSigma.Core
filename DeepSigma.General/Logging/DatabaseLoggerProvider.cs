@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace DeepSigma.General.Logging;
+namespace DeepSigma.Core.Logging;
 
 /// <summary>
 /// A provider for creating a custom database logger.

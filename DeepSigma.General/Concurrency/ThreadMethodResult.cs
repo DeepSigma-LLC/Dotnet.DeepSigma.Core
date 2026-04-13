@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace DeepSigma.General.Concurrency;
+namespace DeepSigma.Core.Concurrency;
 
 /// <summary>
 /// Represents the result of a method executed in a separate thread.

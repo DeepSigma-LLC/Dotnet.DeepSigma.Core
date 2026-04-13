@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DeepSigma.General.Encode;
+namespace DeepSigma.Core.Encode;
 
 internal static class Base32Encoder
 {

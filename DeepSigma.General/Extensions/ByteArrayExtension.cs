@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Extension methods for byte arrays.

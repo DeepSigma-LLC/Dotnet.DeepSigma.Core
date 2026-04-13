@@ -1,7 +1,7 @@
-﻿using DeepSigma.General.Enums;
+﻿using DeepSigma.Core.Enums;
 using System.Globalization;
 
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Provides extension methods for decimal values, including rounding, formatting, and precision handling.

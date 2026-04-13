@@ -1,4 +1,4 @@
-﻿namespace DeepSigma.General.Tests.Models;
+﻿namespace DeepSigma.Core.Tests.Models;
 
 public class UniqueTestReferenceType : ComparableReferenceType
 {

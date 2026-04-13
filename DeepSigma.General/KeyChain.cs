@@ -1,6 +1,6 @@
-﻿using DeepSigma.General.Serialization;
+﻿using DeepSigma.Core.Serialization;
 
-namespace DeepSigma.General;
+namespace DeepSigma.Core;
 
 /// <summary>
 /// Manages a collection of keys, potentially for API access or encryption purposes.

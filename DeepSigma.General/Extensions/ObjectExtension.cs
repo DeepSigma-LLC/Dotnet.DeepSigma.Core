@@ -1,10 +1,10 @@
 ﻿
-using DeepSigma.General.Serialization;
+using DeepSigma.Core.Serialization;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace DeepSigma.General.Extensions;
+namespace DeepSigma.Core.Extensions;
 
 /// <summary>
 /// Extensions for object functionality extension.

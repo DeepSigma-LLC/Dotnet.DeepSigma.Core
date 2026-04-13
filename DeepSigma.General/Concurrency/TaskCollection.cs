@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace DeepSigma.General.Concurrency;
+namespace DeepSigma.Core.Concurrency;
 
 /// <summary>
 /// Represents a collection of tasks.
@@ -31,8 +31,5 @@ public class TaskCollection
     /// Returns the total number of tasks in the collection.
     /// </summary>
     /// <returns></returns>
-    public double GetTotalTaskCount()
-    {
-        return ThreadStatusDataModels.Count;
-    }
+    public double GetTotalTaskCount() => ThreadStatusDataModels.Count;
 }

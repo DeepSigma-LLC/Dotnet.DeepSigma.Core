@@ -1,4 +1,4 @@
-﻿namespace DeepSigma.General.Monads;
+﻿namespace DeepSigma.Core.Monads;
 
 /// <summary>
 /// Represents the result of an operation as a success.

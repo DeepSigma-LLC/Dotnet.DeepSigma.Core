@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace DeepSigma.General.Serialization;
+namespace DeepSigma.Core.Serialization;
 
 /// <summary>
 /// Utility class for serialization and deserialization of objects to and from JSON strings.

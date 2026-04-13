@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Logging;
+namespace DeepSigma.Core.Logging;
 
 /// <summary>
 /// Custom file logger option properties.

@@ -1,7 +1,7 @@
-﻿using DeepSigma.General.Extensions;
+﻿using DeepSigma.Core.Extensions;
 using System.Collections;
 
-namespace DeepSigma.General.Caching;
+namespace DeepSigma.Core.Caching;
 
 /// <summary>
 /// A simple local cache implementation with expiration support.

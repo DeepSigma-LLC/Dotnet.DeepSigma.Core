@@ -1,6 +1,6 @@
-﻿using DeepSigma.General.Enums;
+﻿using DeepSigma.Core.Enums;
 
-namespace DeepSigma.General;
+namespace DeepSigma.Core;
 
 /// <summary>
 /// Represents a periodicity configuration including periodicity type, day selection, and time interval.

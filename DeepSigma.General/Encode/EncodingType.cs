@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Encode;
+namespace DeepSigma.Core.Encode;
 
 /// <summary>
 /// Specifies the type of encoding to be used.

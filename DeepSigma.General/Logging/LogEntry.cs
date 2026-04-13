@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Logging;
+namespace DeepSigma.Core.Logging;
 
 /// <summary>
 /// A class representing a log entry with various properties.

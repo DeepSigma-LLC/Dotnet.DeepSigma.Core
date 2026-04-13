@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace DeepSigma.General;
+namespace DeepSigma.Core;
 
 /// <summary>
 /// A generic quantity struct that stores the absolute value of a quantity.

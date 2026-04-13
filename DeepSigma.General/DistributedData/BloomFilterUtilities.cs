@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Security.Cryptography;
 
-namespace DeepSigma.General.DistributedData;
+namespace DeepSigma.Core.DistributedData;
 
 internal class BloomFilterUtilities
 {

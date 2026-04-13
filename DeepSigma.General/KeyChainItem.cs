@@ -1,4 +1,4 @@
-﻿namespace DeepSigma.General;
+﻿namespace DeepSigma.Core;
 
 /// <summary>
 /// Represents an item in a key chain with a display name and a key.

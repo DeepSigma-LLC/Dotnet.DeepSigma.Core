@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using System.Text;
 
-namespace DeepSigma.General.Encode;
+namespace DeepSigma.Core.Encode;
 
 internal static class Base58Encoder
 {

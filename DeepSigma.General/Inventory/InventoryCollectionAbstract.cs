@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace DeepSigma.General.Inventory;
+namespace DeepSigma.Core.Inventory;
 
 /// <summary>
 /// Abstract class for an inventory collection that provides basic functionality for managing a collection of items.

@@ -1,4 +1,4 @@
-﻿namespace DeepSigma.General.DistributedData.Interface;
+﻿namespace DeepSigma.Core.DistributedData.Interface;
 
 /// <summary>
 /// Bloom filter interface.

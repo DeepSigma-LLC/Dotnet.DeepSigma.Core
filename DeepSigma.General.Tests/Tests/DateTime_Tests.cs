@@ -1,8 +1,8 @@
-﻿using DeepSigma.General.DateTimeUnification;
-using DeepSigma.General.Extensions;
+﻿using DeepSigma.Core.DateTimeUnification;
+using DeepSigma.Core.Extensions;
 using Xunit;
 
-namespace DeepSigma.General.Tests.Tests;
+namespace DeepSigma.Core.Tests.Tests;
 
 public class DateTime_Tests
 {

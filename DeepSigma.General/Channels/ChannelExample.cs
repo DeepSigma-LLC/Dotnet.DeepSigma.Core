@@ -1,6 +1,6 @@
 ﻿using System.Threading.Channels;
 
-namespace DeepSigma.General.ConcurrentChannel;
+namespace DeepSigma.Core.Channels;
 
 /// <summary>
 /// Demonstrates the use of Channels for producer-consumer scenarios.
@@ -19,7 +19,7 @@ internal static class ChannelExample
     /// <summary>
     /// Runs a producer-consumer example using a bounded channel.
     /// </summary>
-    /// <param name="cancel_token"></param>
+    /// <param name="cancel_token">A cancellation token that can be used to cancel the operation.</param>
     /// <returns></returns>
     private static async Task RunJobsFromChannel(CancellationToken? cancel_token = null)
     {

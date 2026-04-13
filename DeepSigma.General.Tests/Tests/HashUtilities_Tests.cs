@@ -1,9 +1,9 @@
-﻿using DeepSigma.General.Encode;
-using DeepSigma.General.Utilities;
+﻿using DeepSigma.Core.Encode;
+using DeepSigma.Core.Utilities;
 using System.Security.Cryptography;
 using Xunit;
 
-namespace DeepSigma.General.Tests.Tests;
+namespace DeepSigma.Core.Tests.Tests;
 
 public class HashUtilities_Tests
 {

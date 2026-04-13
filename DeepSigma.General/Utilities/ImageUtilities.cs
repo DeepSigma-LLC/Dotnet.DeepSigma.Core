@@ -1,5 +1,5 @@
 ﻿
-namespace DeepSigma.General.Utilities;
+namespace DeepSigma.Core.Utilities;
 
 
 /// <summary>

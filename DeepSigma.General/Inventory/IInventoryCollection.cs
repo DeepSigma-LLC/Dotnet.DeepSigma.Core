@@ -1,4 +1,4 @@
-﻿namespace DeepSigma.General.Inventory;
+﻿namespace DeepSigma.Core.Inventory;
 
 /// <summary>
 /// Defines a generic inventory collection interface with common collection operations.

@@ -1,9 +1,9 @@
-﻿using DeepSigma.General.Serialization;
-using DeepSigma.General.Tests.Models;
+﻿using DeepSigma.Core.Serialization;
+using DeepSigma.Core.Tests.Models;
 using System.IO;
 using Xunit;
 
-namespace DeepSigma.General.Tests.Tests
+namespace DeepSigma.Core.Tests.Tests
 {
     public class BinarySerializationTests
     {

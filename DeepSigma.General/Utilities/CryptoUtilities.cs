@@ -1,8 +1,8 @@
 ﻿
-using DeepSigma.General.Encode;
+using DeepSigma.Core.Encode;
 using System.Security.Cryptography;
 
-namespace DeepSigma.General.Utilities;
+namespace DeepSigma.Core.Utilities;
 
 /// <summary>
 /// Provides utility methods for cryptographic operations such as RSA and AES encryption/decryption, key generation, and digital signatures.

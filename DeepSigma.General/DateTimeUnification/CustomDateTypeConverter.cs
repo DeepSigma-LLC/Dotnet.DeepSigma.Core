@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DeepSigma.General.DateTimeUnification;
+namespace DeepSigma.Core.DateTimeUnification;
 
 /// <summary>
 /// Type converter for CustomDateTypeConverter.

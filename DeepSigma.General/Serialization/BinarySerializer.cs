@@ -1,11 +1,11 @@
-﻿using DeepSigma.General;
+﻿using DeepSigma.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeepSigma.General.Serialization;
+namespace DeepSigma.Core.Serialization;
 
 /// <summary>
 /// Provides methods for serializing and deserializing collections of objects to and from binary format.

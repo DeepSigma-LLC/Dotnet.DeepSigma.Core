@@ -1,7 +1,7 @@
-﻿using DeepSigma.General.Tests.Models;
+﻿using DeepSigma.Core.Tests.Models;
 using Xunit;
 
-namespace DeepSigma.General.Tests.Tests;
+namespace DeepSigma.Core.Tests.Tests;
 
 public class ComparableReferenceType_Test
 {

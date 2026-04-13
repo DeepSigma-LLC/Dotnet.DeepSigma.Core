@@ -1,4 +1,4 @@
-﻿namespace DeepSigma.General.Utilities;
+﻿namespace DeepSigma.Core.Utilities;
 
 /// <summary>
 /// A helper class for learning and performing common bitwise operations.

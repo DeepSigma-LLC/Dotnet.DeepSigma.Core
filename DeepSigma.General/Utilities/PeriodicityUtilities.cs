@@ -1,6 +1,6 @@
-﻿using DeepSigma.General.Extensions;
+﻿using DeepSigma.Core.Extensions;
 
-namespace DeepSigma.General.Enums;
+namespace DeepSigma.Core.Enums;
 
 
 /// <summary>

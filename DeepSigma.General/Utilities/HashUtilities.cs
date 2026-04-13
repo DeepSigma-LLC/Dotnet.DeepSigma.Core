@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace DeepSigma.General.Utilities;
+namespace DeepSigma.Core.Utilities;
 
 /// <summary>
 /// Provides utility methods for computing hashes using various algorithms.
