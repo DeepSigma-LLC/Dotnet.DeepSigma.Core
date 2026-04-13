@@ -9,14 +9,14 @@ namespace DeepSigma.Core.Channels;
 /// Use <see cref="CreateUnbounded"/> or <see cref="CreateBounded"/> to construct an instance.
 /// </summary>
 /// <typeparam name="T">The type of items held in the queue.</typeparam>
-public sealed class BackgroundMessageQueueService<T>
+public sealed class BackgroundMessageQueue<T>
 {
     private readonly Channel<T> _channel;
 
-    private BackgroundMessageQueueService(Channel<T> channel) => _channel = channel;
+    private BackgroundMessageQueue(Channel<T> channel) => _channel = channel;
 
     /// <summary>
-    /// Creates a <see cref="BackgroundMessageQueueService{T}"/> backed by an unbounded channel.
+    /// Creates a <see cref="BackgroundMessageQueue{T}"/> backed by an unbounded channel.
     /// Items are never dropped and the queue grows as needed. Use this when producers
     /// must never block or lose data and memory pressure is acceptable.
     /// </summary>
@@ -26,7 +26,7 @@ public sealed class BackgroundMessageQueueService<T>
     /// <param name="singleWriter">
     /// <see langword="true"/> if at most one writer will be active at a time; enables optimizations.
     /// </param>
-    public static BackgroundMessageQueueService<T> CreateUnbounded(
+    public static BackgroundMessageQueue<T> CreateUnbounded(
         bool singleReader,
         bool singleWriter)
     {
@@ -36,11 +36,11 @@ public sealed class BackgroundMessageQueueService<T>
             SingleWriter = singleWriter,
         });
 
-        return new BackgroundMessageQueueService<T>(channel);
+        return new BackgroundMessageQueue<T>(channel);
     }
 
     /// <summary>
-    /// Creates a <see cref="BackgroundMessageQueueService{T}"/> backed by a bounded channel.
+    /// Creates a <see cref="BackgroundMessageQueue{T}"/> backed by a bounded channel.
     /// Use this when you need to apply backpressure or control memory usage.
     /// </summary>
     /// <param name="capacity">The maximum number of items the channel can hold.</param>
@@ -53,7 +53,7 @@ public sealed class BackgroundMessageQueueService<T>
     /// <param name="singleWriter">
     /// <see langword="true"/> if at most one writer will be active at a time; enables optimizations.
     /// </param>
-    public static BackgroundMessageQueueService<T> CreateBounded(
+    public static BackgroundMessageQueue<T> CreateBounded(
         int capacity,
         bool singleReader,
         bool singleWriter,
@@ -67,7 +67,7 @@ public sealed class BackgroundMessageQueueService<T>
             FullMode = fullMode,
         });
 
-        return new BackgroundMessageQueueService<T>(channel);
+        return new BackgroundMessageQueue<T>(channel);
     }
 
     /// <summary>

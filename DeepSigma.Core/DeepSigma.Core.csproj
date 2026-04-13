@@ -8,8 +8,8 @@
     <Title>DeepSigma.Core</Title>
     <Version>1.0.0</Version>
     <Authors>DeepSigma LLC</Authors>
-    <PackageProjectUrl>https://github.com/DeepSigma-LLC/Dotnet.DeepSigma.General</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/DeepSigma-LLC/Dotnet.DeepSigma.General</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/DeepSigma-LLC/Dotnet.DeepSigma.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DeepSigma-LLC/Dotnet.DeepSigma.Core</RepositoryUrl>
     <FileVersion>$(Version)</FileVersion>
     <Description>C# library for general utilities and language extensions.</Description>
     <AssemblyVersion>$(Version)</AssemblyVersion>

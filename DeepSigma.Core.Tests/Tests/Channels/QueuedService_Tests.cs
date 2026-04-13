@@ -13,7 +13,7 @@ public class QueuedService_Tests
     [Fact]
     public void Unbounded_TryEnqueue_AlwaysReturnsTrue()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateUnbounded(singleReader: true, singleWriter: true);
+        var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
 
         for (int i = 0; i < 1_000; i++)
             Assert.True(queue.TryEnqueue(i));
@@ -22,7 +22,7 @@ public class QueuedService_Tests
     [Fact]
     public void Unbounded_Count_ReturnsNull_BecauseUnboundedChannelsDoNotSupportCounting()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateUnbounded(singleReader: true, singleWriter: true);
+        var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
 
         queue.TryEnqueue(1);
         queue.TryEnqueue(2);
@@ -35,7 +35,7 @@ public class QueuedService_Tests
     [Fact]
     public async Task Unbounded_DequeueAsync_ReturnsFIFOOrder()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateUnbounded(singleReader: true, singleWriter: true);
+        var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
 
         queue.TryEnqueue(10);
         queue.TryEnqueue(20);
@@ -49,7 +49,7 @@ public class QueuedService_Tests
     [Fact]
     public async Task Unbounded_WaitToReadAsync_ReturnsTrueWhenItemAvailable()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateUnbounded(singleReader: true, singleWriter: true);
+        var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
         queue.TryEnqueue(42);
 
         Assert.True(await queue.WaitToReadAsync());
@@ -58,7 +58,7 @@ public class QueuedService_Tests
     [Fact]
     public async Task Unbounded_DequeueAsync_CancellationToken_Throws()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateUnbounded(singleReader: true, singleWriter: true);
+        var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
         using var cts = new CancellationTokenSource();
         cts.Cancel();
 
@@ -73,7 +73,7 @@ public class QueuedService_Tests
     [Fact]
     public async Task Bounded_DropWrite_DropsIncomingItemWhenFull()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateBounded(
+        var queue = BackgroundMessageQueue<int>.CreateBounded(
             capacity: 2,
             singleReader: true,
             singleWriter: true,
@@ -94,7 +94,7 @@ public class QueuedService_Tests
     [Fact]
     public async Task Bounded_DropOldest_KeepsNewestItemsWhenFull()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateBounded(
+        var queue = BackgroundMessageQueue<int>.CreateBounded(
             capacity: 2,
             singleReader: true,
             singleWriter: true,
@@ -111,7 +111,7 @@ public class QueuedService_Tests
     [Fact]
     public async Task Bounded_DropNewest_KeepsOriginalItemsWhenFull()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateBounded(
+        var queue = BackgroundMessageQueue<int>.CreateBounded(
             capacity: 2,
             singleReader: true,
             singleWriter: true,
@@ -128,7 +128,7 @@ public class QueuedService_Tests
     [Fact]
     public void Bounded_Count_ReflectsEnqueuedItems()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateBounded(
+        var queue = BackgroundMessageQueue<int>.CreateBounded(
             capacity: 10,
             singleReader: true,
             singleWriter: true,
@@ -147,7 +147,7 @@ public class QueuedService_Tests
     [Fact]
     public async Task QueueReaderService_ProcessesAllEnqueuedItems()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateUnbounded(singleReader: true, singleWriter: true);
+        var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
         var processed = new List<int>();
 
         queue.TryEnqueue(1);
@@ -174,7 +174,7 @@ public class QueuedService_Tests
     [Fact]
     public async Task QueueReaderService_StopsCleanlyOnCancellation()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateUnbounded(singleReader: true, singleWriter: true);
+        var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
         var processed = new List<int>();
 
         using var cts = new CancellationTokenSource();
@@ -191,7 +191,7 @@ public class QueuedService_Tests
     [Fact]
     public async Task QueueReaderService_ProcessesItemsEnqueuedAfterStart()
     {
-        var queue = BackgroundMessageQueueService<int>.CreateUnbounded(singleReader: true, singleWriter: true);
+        var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
         var processed = new List<int>();
         var tcs = new TaskCompletionSource();
 

@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="C:\Users\brend\.nuget\packages\deepsigma.unittest\1.0.0.1\contentFiles\any\net9.0\testhost.dll" />
-    <Content Remove="C:\Users\brend\.nuget\packages\deepsigma.unittest\1.0.0.1\contentFiles\any\net9.0\testhost.exe" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DeepSigma.UnitTest" Version="1.0.1" />
 	  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
@@ -21,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeepSigma.General\DeepSigma.Core.csproj" />
+    <ProjectReference Include="..\DeepSigma.Core\DeepSigma.Core.csproj" />
   </ItemGroup>
 
 </Project>

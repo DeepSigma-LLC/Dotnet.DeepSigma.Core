@@ -19,7 +19,7 @@ namespace DeepSigma.Core.Channels;
 /// });
 /// 
 /// // Register the queue service as a singleton so it can be shared across the application.
-/// services.AddSingleton&lt;BackgroundMessageQueueService&lt;YourItemType&gt;&gt;(); 
+/// services.AddSingleton&lt;BackgroundMessageQueue&lt;YourItemType&gt;&gt;(); 
 /// // Replace YourItemType with the actual type of items in your queue.
 /// services.AddHostedService&lt;BackgroundMessageQueueReaderService&lt;YourItemType&gt;&gt;();
 /// </code>
@@ -28,7 +28,7 @@ namespace DeepSigma.Core.Channels;
 /// <param name="queueService">The background queue service from which items are dequeued for processing. Must not be null.</param>
 /// <param name="action_method">The action to perform on each dequeued item. Must not be null.</param>
 /// <param name="logger">An optional logger for logging information, warnings, or errors during the processing of items.</param>
-public class BackgroundMessageQueueReaderService<T>(BackgroundMessageQueueService<T> queueService, Action<T> action_method, ILogger<BackgroundMessageQueueReaderService<T>>? logger = null) 
+public class BackgroundMessageQueueReaderService<T>(BackgroundMessageQueue<T> queueService, Action<T> action_method, ILogger<BackgroundMessageQueueReaderService<T>>? logger = null) 
     : IHostedLifecycleService // We could also use IHostedService, but IHostedLifecycleService provides more granular lifecycle methods which can be useful for more complex scenarios.
 {
 
