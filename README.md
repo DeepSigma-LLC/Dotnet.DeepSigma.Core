@@ -1,4 +1,4 @@
-# DeepSigma.General
+# DeepSigma.Core
 
 A broad .NET utility library that collects reusable building blocks for everyday application development, including extension methods, caching helpers, serialization utilities, cryptographic helpers, date/time utilities, and time-stepping components.
 
