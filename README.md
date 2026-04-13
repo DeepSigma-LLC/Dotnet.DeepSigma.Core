@@ -4,7 +4,7 @@ A broad .NET utility library that collects reusable building blocks for everyday
 
 ## Why this library exists
 
-`DeepSigma.General` packages up common infrastructure and convenience helpers that tend to get rewritten across projects. Instead of scattering small utilities across multiple codebases, this library centralizes them into a single reusable package.
+`DeepSigma.Core` packages up common infrastructure and convenience helpers that tend to get rewritten across projects. Instead of scattering small utilities across multiple codebases, this library centralizes them into a single reusable package.
 
 ## What’s included
 
@@ -74,7 +74,7 @@ If you are consuming this library from source, add a project reference:
 
 ```xml
 <ItemGroup>
-  <ProjectReference Include="..\DeepSigma.General\DeepSigma.General.csproj" />
+  <ProjectReference Include="..\DeepSigma.Core\DeepSigma.Core.csproj" />
 </ItemGroup>
 ```
 
@@ -83,7 +83,7 @@ If you publish the generated package to a NuGet feed, consumers can add a packag
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="DeepSigma.General" Version="3.0.0" />
+  <PackageReference Include="DeepSigma.Core" Version="3.0.0" />
 </ItemGroup>
 ```
 ```
@@ -94,12 +94,12 @@ If you publish the generated package to a NuGet feed, consumers can add a packag
 Import the namespaces you need:
 
 ```csharp
-using DeepSigma.General;
-using DeepSigma.General.Caching;
-using DeepSigma.General.Extensions;
-using DeepSigma.General.Serialization;
-using DeepSigma.General.TimeStepper;
-using DeepSigma.General.Utilities;
+using DeepSigma.Core;
+using DeepSigma.Core.Caching;
+using DeepSigma.Core.Extensions;
+using DeepSigma.Core.Serialization;
+using DeepSigma.Core.TimeStepper;
+using DeepSigma.Core.Utilities;
 ```
 
 ## Usage examples
@@ -107,7 +107,7 @@ using DeepSigma.General.Utilities;
 ### Absolute values with type safety
 
 ```csharp
-using DeepSigma.General;
+using DeepSigma.Core;
 
 AbsoluteValue<int> exposure = -42;
 Console.WriteLine(exposure.Value); // 42
@@ -116,7 +116,7 @@ Console.WriteLine(exposure.Value); // 42
 ### In-memory caching with TTL
 
 ```csharp
-using DeepSigma.General.Caching;
+using DeepSigma.Core.Caching;
 
 var cache = new LocalCache<string, UserDto>(
     time_to_live: TimeSpan.FromMinutes(10),
@@ -129,7 +129,7 @@ UserDto? user = cache.TryGetWithCacheRefresh("user-123");
 ### JSON serialization
 
 ```csharp
-using DeepSigma.General.Serialization;
+using DeepSigma.Core.Serialization;
 
 var payload = new { Id = 1, Name = "Alice" };
 string json = JsonSerializer.GetSerializedString(payload);
@@ -139,7 +139,7 @@ var restored = JsonSerializer.GetDeserializedObject<dynamic>(json);
 ### Hashing
 
 ```csharp
-using DeepSigma.General.Utilities;
+using DeepSigma.Core.Utilities;
 using System.Security.Cryptography;
 
 byte[] hash = HashUtilities.ComputeHash("test", HashAlgorithmName.SHA256);
@@ -148,7 +148,7 @@ byte[] hash = HashUtilities.ComputeHash("test", HashAlgorithmName.SHA256);
 ### Date/time extensions
 
 ```csharp
-using DeepSigma.General.Extensions;
+using DeepSigma.Core.Extensions;
 
 DateTime today = DateTime.Today;
 DateTime nextBusinessDay = today.NextWeekday();
@@ -158,8 +158,8 @@ string safeFileStamp = today.ToStringFileFormat();
 ### Self-aligning time steps
 
 ```csharp
-using DeepSigma.General.Enums;
-using DeepSigma.General.TimeStepper;
+using DeepSigma.Core.Enums;
+using DeepSigma.Core.TimeStepper;
 
 var periodicity = new PeriodicityConfiguration(
     Periodicity.Monthly,
@@ -194,7 +194,7 @@ dotnet test
 ## Repository structure
 
 ```text
-DeepSigma.General/
+DeepSigma.Core/
 ├── Caching/
 ├── ChannelExamples/
 ├── Concurrency/
@@ -210,12 +210,12 @@ DeepSigma.General/
 ├── Serialization/
 ├── TimeStepper/
 ├── Utilities/
-└── DeepSigma.General.csproj
+└── DeepSigma.Core.csproj
 
-DeepSigma.General.Tests/
+DeepSigma.Core.Tests/
 ├── Models/
 ├── Tests/
-└── DeepSigma.General.Tests.csproj
+└── DeepSigma.Core.Tests.csproj
 ```
 
 ## When to use this project
