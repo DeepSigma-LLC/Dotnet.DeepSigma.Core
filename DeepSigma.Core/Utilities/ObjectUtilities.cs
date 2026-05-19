@@ -39,19 +39,51 @@ public class ObjectUtilities
         }
     }
 
-    /// <summary>
-    /// Get property value by property selection expression.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="V"></typeparam>
-    /// <param name="object_instance"></param>
-    /// <param name="predicate"></param>
-    /// <returns></returns>
-    public static V? GetPropertyValue<T, V>(T object_instance, Expression<Func<T, object>> predicate)
+   /// <summary>
+   /// Retrieves the value of a specified property from an object instance using a strongly typed expression.
+   /// </summary>
+   /// <remarks>This method provides a type-safe way to access property values at runtime without using string
+   /// property names. It is useful for scenarios where reflection is needed but compile-time safety is
+   /// desired.</remarks>
+   /// <typeparam name="T">The type of the object instance containing the property.</typeparam>
+   /// <typeparam name="V">The type of the property value to retrieve.</typeparam>
+   /// <param name="objectInstance">The object instance from which to retrieve the property value.</param>
+   /// <param name="expression">An expression that identifies the property to retrieve. Must reference a property of type <typeparamref
+   /// name="T"/>.</param>
+   /// <returns>The value of the specified property, or <see langword="null"/> if the property value is null.</returns>
+   /// <exception cref="ArgumentException">Thrown if the expression does not reference a property, or if the specified property is not found on the type.</exception>
+    public static V? GetPropertyValue<T, V>(T objectInstance, Expression<Func<T, object>> expression)
     {
-        if (object_instance is null) return default;
-        string property_name = GetPropertyName(predicate);
-        return (V?)object_instance.GetType()?.GetProperty(property_name)?.GetValue(object_instance, null);
+        if (expression.Body is MemberExpression memberExpression)
+        {
+            PropertyInfo? property = typeof(T).GetProperty(memberExpression.Member.Name) ??
+                throw new ArgumentException($"Property '{memberExpression.Member.Name}' not found on type '{typeof(T).Name}'.");
+            return (V?)property.GetValue(objectInstance);
+        }
+        else
+        {
+            throw new ArgumentException("Expression is not a member expression.");
+        }
+    }
+
+    /// <summary>
+    /// Retrieves the value of a specified property from an object instance using reflection.
+    /// </summary>
+    /// <remarks>This method uses reflection to access the property value at runtime. If the property is not
+    /// found or is inaccessible, an exception is thrown. Use this method when property names are determined
+    /// dynamically.</remarks>
+    /// <typeparam name="T">The type of the object instance containing the property.</typeparam>
+    /// <typeparam name="V">The type of the property value to retrieve.</typeparam>
+    /// <param name="objectInstance">The object instance from which to retrieve the property value. Can be null for static properties.</param>
+    /// <param name="propertyName">The name of the property to retrieve. The search is case-sensitive.</param>
+    /// <returns>The value of the specified property cast to type V, or null if the property value is null.</returns>
+    /// <exception cref="ArgumentException">Thrown if a property with the specified name is not found on the type T.</exception>
+    public static V? GetPropertyValue<T, V>(T objectInstance, string propertyName)
+    {
+        PropertyInfo? property = typeof(T).GetProperty(propertyName) ??
+            throw new ArgumentException($"Property '{propertyName}' not found on type '{typeof(T).Name}'.");
+
+        return (V?)property.GetValue(objectInstance);
     }
 
     /// <summary>
@@ -93,7 +125,7 @@ public class ObjectUtilities
     public static HashSet<string> GetAllPropertyNames<T>(T object_instance)
     {
         HashSet<PropertyInfo> properties = GetAllPropertyInfos(object_instance).ToHashSet();
-        HashSet<string> names = new HashSet<string>();
+        HashSet<string> names = [];
         foreach (PropertyInfo propertyInfo in properties)
         {
             names.Add(propertyInfo.Name);
