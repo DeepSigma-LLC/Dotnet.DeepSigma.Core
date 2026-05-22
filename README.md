@@ -42,6 +42,10 @@ The library includes a large set of extension methods for working with:
 - configurable date-adjustment behavior for weekday/weekend/specific-day alignment
 - `TimeSpanStepper` and related configuration types
 
+### XML utilities (new in 1.3.0)
+- `XMLUtilities` — sync file-path API plus async stream/string APIs (`FromString<T>`, `FromStreamAsync<T>`, `LoadDocumentAsync`, `SerializeToStreamAsync<T>`, `ToString<T>`)
+- `XmlReaderExtensions.ReadElementsAsync` — stream-yield matching XML elements from a `Stream` without buffering the full document (intended for OAI-PMH, RSS, large XML dumps)
+
 ### Additional utilities
 - configuration helpers
 - distributed-data and concurrency helpers
@@ -155,6 +159,58 @@ DateTime nextBusinessDay = today.NextWeekday();
 string safeFileStamp = today.ToStringFileFormat();
 ```
 
+### XML utilities (new in 1.3.0)
+
+The existing `XMLUtilities.GetObject<T>(filePath)` and `Serialize<T>(obj)` continue to work unchanged. Five new helpers cover HTTP/stream workflows where you don't have a file path:
+
+```csharp
+using DeepSigma.Core.Utilities;
+
+// Deserialize from an in-memory string.
+PersonDto? person = XMLUtilities.FromString<PersonDto>(xmlText);
+
+// Deserialize from a stream (HTTP response body, file stream, memory stream).
+await using FileStream input = File.OpenRead("people.xml");
+PersonDto? loaded = await XMLUtilities.FromStreamAsync<PersonDto>(input, cancellationToken: ct);
+
+// Load as XDocument for hand-projected parsing.
+XDocument document = await XMLUtilities.LoadDocumentAsync(input, ct);
+
+// Serialize to a stream / string.
+await using FileStream output = File.Create("out.xml");
+await XMLUtilities.SerializeToStreamAsync(person, output, ct);
+
+string xml = XMLUtilities.ToString(person, indent: true);
+```
+
+### Streaming XML for large payloads
+
+`XmlReaderExtensions.ReadElementsAsync` yields matching XML elements from a `Stream` without ever materializing the full document — ideal for OAI-PMH harvests, RSS feeds, and other large XML dumps:
+
+```csharp
+using DeepSigma.Core.Utilities;
+
+await using FileStream input = File.OpenRead("huge-feed.xml");
+
+// As XElement — hand-project the matches.
+await foreach (XElement item in XmlReaderExtensions.ReadElementsAsync(input, "item"))
+{
+    Console.WriteLine(item.Element("title")?.Value);
+}
+
+// As a typed projection — XmlSerializer deserializes each matched subtree.
+await foreach (FeedItem item in XmlReaderExtensions.ReadElementsAsync<FeedItem>(
+                   input,
+                   localName: "item",
+                   namespaceUri: "http://example.com/feed",
+                   cancellationToken: ct))
+{
+    await store.UpsertAsync(item);
+}
+```
+
+Memory stays O(1) regardless of input size. Honors cancellation between elements.
+
 ### Self-aligning time steps
 
 ```csharp
@@ -226,6 +282,12 @@ This library is a good fit when you want:
 - lightweight in-memory caching primitives
 - convenience wrappers for hashing, crypto, and serialization
 - a broad set of practical extension methods for application code
+
+## Changelog
+
+| Version | Notes |
+|---|---|
+| `1.3.0` | Added async/stream/string XML helpers to `XMLUtilities` (`FromString<T>`, `FromStreamAsync<T>`, `LoadDocumentAsync`, `SerializeToStreamAsync<T>`, `ToString<T>`). New `XmlReaderExtensions.ReadElementsAsync` for streaming large XML element-by-element. Existing file-path APIs unchanged. |
 
 ## License
 
