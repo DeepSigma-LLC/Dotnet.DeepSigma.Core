@@ -81,13 +81,13 @@ public static class CryptoUtilities
     /// </summary>
     /// <param name="cipher_text"></param>
     /// <param name="key"></param>
-    /// <param name="iv"></param>
+    /// <param name="initializationVector"></param>
     /// <returns></returns>
-    public static string AESDecrypt(byte[] cipher_text, byte[] key, byte[] iv)
+    public static string AESDecrypt(byte[] cipher_text, byte[] key, byte[] initializationVector)
     {
         using Aes aes = Aes.Create();
         aes.Key = key;
-        aes.IV = iv;
+        aes.IV = initializationVector;
 
         ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
         using MemoryStream ms = new(cipher_text);
@@ -100,14 +100,14 @@ public static class CryptoUtilities
     /// <summary>
     /// Generates a new AES key and IV.
     /// </summary>
-    /// <param name="keySize"> Key size in bytes (16, 24, or 32 for AES-128, AES-192, or AES-256)</param>
-    /// <param name="ivSize"> IV size in bytes (should be 16 for AES)</param>
+    /// <param name="keySizeInBytes"> Key size in bytes (16, 24, or 32 for AES-128, AES-192, or AES-256)</param>
+    /// <param name="ivSizeInBytes"> IV size in bytes (should be 16 for AES)</param>
     /// <returns></returns>
-    public static (byte[] key, byte[] iv) GenerateAESKeyAndIV(int keySize = 32, int ivSize = 16)
+    public static (byte[] key, byte[] iv) GenerateAESKeyAndIV(int keySizeInBytes = 32, int ivSizeInBytes = 16)
     {
         using Aes aes = Aes.Create();
-        aes.KeySize = keySize * 8; // bits
-        aes.BlockSize = ivSize * 8; // bits
+        aes.KeySize = keySizeInBytes * 8; // bits
+        aes.BlockSize = ivSizeInBytes * 8; // bits
         aes.GenerateKey();
         aes.GenerateIV();
         return (aes.Key, aes.IV);
@@ -121,11 +121,11 @@ public static class CryptoUtilities
     /// Important: Do not share the generated AES key file with anyone. It is crucial for the security of your key chain. Keep it in a secure location and ensure that only authorized personnel have access to it.
     /// </remarks>
     /// <param name="aes_key_json_file_path">The file path where the AES key file will be created.</param>
-    /// <param name="keySize">The size of the AES key in bytes.</param>
-    /// <param name="ivSize">The size of the initialization vector (IV) in bytes.</param>
+    /// <param name="keySizeInBytes">The size of the AES key in bytes.</param>
+    /// <param name="ivSizeInBytes">The size of the initialization vector (IV) in bytes.</param>
     /// <param name="textEncodingType">The encoding type to use for the AES key file.</param>
     /// <returns>An exception if an error occurs, otherwise null.</returns>
-    public static Exception? GenerateAesKeyFile(string aes_key_json_file_path, int keySize = 32, int ivSize = 16, EncodingType textEncodingType = EncodingType.Base64)
+    public static Exception? GenerateAesKeyFile(string aes_key_json_file_path, int keySizeInBytes = 32, int ivSizeInBytes = 16, EncodingType textEncodingType = EncodingType.Base64)
     {
         if (string.IsNullOrWhiteSpace(aes_key_json_file_path))
         {
@@ -136,10 +136,10 @@ public static class CryptoUtilities
             return new Exception($"AES key file already exists: {aes_key_json_file_path}");
         }
 
-        (byte[] aesKey, byte[] iv) = CryptoUtilities.GenerateAESKeyAndIV(keySize, ivSize);
+        (byte[] aesKey, byte[] iv) = CryptoUtilities.GenerateAESKeyAndIV(keySizeInBytes, ivSizeInBytes);
         string encoded_key = Encoder.EncodeToString(aesKey, textEncodingType);
         string encoded_iv = Encoder.EncodeToString(iv, textEncodingType);
-        AesKeyFile aesKeyFile = new(encoded_key, encoded_iv, new AesKeyFileMetadata(keySize, ivSize, textEncodingType, textEncodingType.ToDescriptionString()));
+        AesKeyFile aesKeyFile = new(encoded_key, encoded_iv, new AesKeyFileMetadata(keySizeInBytes, ivSizeInBytes, textEncodingType, textEncodingType.ToDescriptionString(), "1.0.0"));
 
         string json = System.Text.Json.JsonSerializer.Serialize(aesKeyFile);
         File.WriteAllText(aes_key_json_file_path, json);
@@ -152,7 +152,7 @@ public static class CryptoUtilities
     /// <param name="jsonFilePath">The json file path of the AES key file.</param>
     /// <param name="textEncodingType">The encoding type used in the AES key file.</param>
     /// <returns>A tuple containing an exception if an error occurs, the AES key, and the IV.</returns>
-    public static (Exception? error, byte[]? aesKey, byte[]? iv) GetAesKeyAndIvFromFile(string jsonFilePath, EncodingType textEncodingType = EncodingType.Base64)
+    public static (Exception? error, byte[]? aesKey, byte[]? initializationVector) GetAesKeyAndIvFromFile(string jsonFilePath, EncodingType textEncodingType = EncodingType.Base64)
     {
         if (jsonFilePath.IsNullOrEmpty() || Path.Exists(jsonFilePath) == false)
         {
@@ -169,8 +169,8 @@ public static class CryptoUtilities
         }
 
         byte[] aesKey = Encoder.DecodeFromString(aesKeyFile.Key, textEncodingType);
-        byte[] iv = Encoder.DecodeFromString(aesKeyFile.IV, textEncodingType);
-        return (null, aesKey, iv);
+        byte[] initializationVector = Encoder.DecodeFromString(aesKeyFile.InitializationVector, textEncodingType);
+        return (null, aesKey, initializationVector);
     }
 
     /// <summary>
