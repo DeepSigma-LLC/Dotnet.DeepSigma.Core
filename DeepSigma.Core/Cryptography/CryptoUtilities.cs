@@ -139,7 +139,7 @@ public static class CryptoUtilities
         (byte[] aesKey, byte[] iv) = CryptoUtilities.GenerateAESKeyAndIV(keySize, ivSize);
         string encoded_key = Encoder.EncodeToString(aesKey, textEncodingType);
         string encoded_iv = Encoder.EncodeToString(iv, textEncodingType);
-        AesKeyFile aesKeyFile = new(encoded_key, encoded_iv, new AesKeyFileMetadata(keySize, ivSize, textEncodingType));
+        AesKeyFile aesKeyFile = new(encoded_key, encoded_iv, new AesKeyFileMetadata(keySize, ivSize, textEncodingType, textEncodingType.ToDescriptionString()));
 
         string json = System.Text.Json.JsonSerializer.Serialize(aesKeyFile);
         File.WriteAllText(aes_key_json_file_path, json);
