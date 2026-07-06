@@ -1,8 +1,8 @@
-﻿
-using DeepSigma.Core.Encode;
+﻿using DeepSigma.Core.Encode;
+using DeepSigma.Core.Extensions;
 using System.Security.Cryptography;
 
-namespace DeepSigma.Core.Utilities;
+namespace DeepSigma.Core.Cryptography;
 
 /// <summary>
 /// Provides utility methods for cryptographic operations such as RSA and AES encryption/decryption, key generation, and digital signatures.
@@ -111,6 +111,66 @@ public static class CryptoUtilities
         aes.GenerateKey();
         aes.GenerateIV();
         return (aes.Key, aes.IV);
+    }
+
+
+    /// <summary>
+    /// Generates a new AES key file at the specified path with the given key and IV sizes.
+    /// </summary>
+    /// <remarks>
+    /// Important: Do not share the generated AES key file with anyone. It is crucial for the security of your key chain. Keep it in a secure location and ensure that only authorized personnel have access to it.
+    /// </remarks>
+    /// <param name="aes_key_json_file_path">The file path where the AES key file will be created.</param>
+    /// <param name="keySize">The size of the AES key in bytes.</param>
+    /// <param name="ivSize">The size of the initialization vector (IV) in bytes.</param>
+    /// <param name="textEncodingType">The encoding type to use for the AES key file.</param>
+    /// <returns>An exception if an error occurs, otherwise null.</returns>
+    public static Exception? GenerateAesKeyFile(string aes_key_json_file_path, int keySize = 32, int ivSize = 16, EncodingType textEncodingType = EncodingType.Base64)
+    {
+        if (string.IsNullOrWhiteSpace(aes_key_json_file_path))
+        {
+            return new Exception($"AES key file path is null or empty: {nameof(aes_key_json_file_path)}");
+        }
+        if (File.Exists(aes_key_json_file_path))
+        {
+            return new Exception($"AES key file already exists: {aes_key_json_file_path}");
+        }
+
+        (byte[] aesKey, byte[] iv) = CryptoUtilities.GenerateAESKeyAndIV(keySize, ivSize);
+        string encoded_key = Encoder.EncodeToString(aesKey, textEncodingType);
+        string encoded_iv = Encoder.EncodeToString(iv, textEncodingType);
+        AesKeyFile aesKeyFile = new(encoded_key, encoded_iv, new AesKeyFileMetadata(keySize, ivSize, textEncodingType));
+
+        string json = System.Text.Json.JsonSerializer.Serialize(aesKeyFile);
+        File.WriteAllText(aes_key_json_file_path, json);
+        return null;
+    }
+
+    /// <summary>
+    /// Reads the AES key and IV from the specified key file.
+    /// </summary>
+    /// <param name="jsonFilePath">The json file path of the AES key file.</param>
+    /// <param name="textEncodingType">The encoding type used in the AES key file.</param>
+    /// <returns>A tuple containing an exception if an error occurs, the AES key, and the IV.</returns>
+    public static (Exception? error, byte[]? aesKey, byte[]? iv) GetAesKeyAndIvFromFile(string jsonFilePath, EncodingType textEncodingType = EncodingType.Base64)
+    {
+        if (jsonFilePath.IsNullOrEmpty() || Path.Exists(jsonFilePath) == false)
+        {
+            return (new Exception($"AES key file path does not exist: {jsonFilePath}"), null, null);
+        }
+
+        string combinedKeyAndIv = File.ReadAllText(jsonFilePath);
+
+        AesKeyFile? aesKeyFile = System.Text.Json.JsonSerializer.Deserialize<AesKeyFile>(combinedKeyAndIv);
+
+        if (aesKeyFile == null)
+        {
+            return (new Exception($"Failed to deserialize AES key file: {jsonFilePath}"), null, null);
+        }
+
+        byte[] aesKey = Encoder.DecodeFromString(aesKeyFile.Key, textEncodingType);
+        byte[] iv = Encoder.DecodeFromString(aesKeyFile.IV, textEncodingType);
+        return (null, aesKey, iv);
     }
 
     /// <summary>
