@@ -124,8 +124,9 @@ public static class CryptoUtilities
     /// <param name="keySizeInBytes">The size of the AES key in bytes.</param>
     /// <param name="ivSizeInBytes">The size of the initialization vector (IV) in bytes.</param>
     /// <param name="textEncodingType">The encoding type to use for the AES key file.</param>
+    /// <param name="id">The unique identifier for the AES key file.</param>
     /// <returns>An exception if an error occurs, otherwise null.</returns>
-    public static Exception? GenerateAesKeyFile(string aes_key_json_file_path, int keySizeInBytes = 32, int ivSizeInBytes = 16, EncodingType textEncodingType = EncodingType.Base64)
+    public static Exception? GenerateAesKeyFile(string aes_key_json_file_path, int keySizeInBytes = 32, int ivSizeInBytes = 16, EncodingType textEncodingType = EncodingType.Base64, string? id = null)
     {
         if (string.IsNullOrWhiteSpace(aes_key_json_file_path))
         {
@@ -139,7 +140,7 @@ public static class CryptoUtilities
         (byte[] aesKey, byte[] iv) = CryptoUtilities.GenerateAESKeyAndIV(keySizeInBytes, ivSizeInBytes);
         string encoded_key = Encoder.EncodeToString(aesKey, textEncodingType);
         string encoded_iv = Encoder.EncodeToString(iv, textEncodingType);
-        AesKeyFile aesKeyFile = new(encoded_key, encoded_iv, new AesKeyFileMetadata(keySizeInBytes, ivSizeInBytes, textEncodingType, textEncodingType.ToDescriptionString(), "1.0.0", Guid.NewGuidTimeOrdered().ToString()));
+        AesKeyFile aesKeyFile = new(encoded_key, encoded_iv, new AesKeyFileMetadata(keySizeInBytes, ivSizeInBytes, textEncodingType, textEncodingType.ToDescriptionString(), "1.0.0", id ?? Guid.NewGuidTimeOrdered().ToString()));
 
         string json = System.Text.Json.JsonSerializer.Serialize(aesKeyFile);
         File.WriteAllText(aes_key_json_file_path, json);
