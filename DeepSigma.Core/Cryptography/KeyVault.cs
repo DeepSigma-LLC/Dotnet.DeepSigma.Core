@@ -29,7 +29,12 @@ public class KeyVault
     /// <summary>
     /// The file path to the initialization vector (IV) file used for encryption and decryption of the key chain data.
     /// </summary>
-    private bool OverwriteFiles { get; init; } = true;
+    private bool OverwriteFiles { get; init; } = false;
+
+    /// <summary>
+    /// Indicates whether updating existing keys in the key chain is allowed. If set to false, attempts to update an existing key will be ignored.
+    /// </summary>
+    private bool AllowKeyUpdate { get; init; } = false;
 
     /// <summary>
     /// Initializes a new instance of the KeyChain class.
@@ -38,7 +43,7 @@ public class KeyVault
     /// <param name="keychain_full_file_path">Required file path for storing the key chain</param>
     /// <param name="TextEncodingType">Optional encoding type for the AES key file (default is Base64)</param>
     /// <param name="overwriteFiles">Indicates whether to overwrite existing files</param>
-    public KeyVault(string aesJsonKeyFilePath, string keychain_full_file_path, bool overwriteFiles, EncodingType TextEncodingType = EncodingType.Base64)
+    public KeyVault(string aesJsonKeyFilePath, string keychain_full_file_path, EncodingType TextEncodingType = EncodingType.Base64, bool overwriteFiles = false, bool allowKeyUpdate = false)
     {
         AesJsonKeyFilePath = aesJsonKeyFilePath;
         KeyChainFullFilePath = keychain_full_file_path;
@@ -77,17 +82,74 @@ public class KeyVault
     /// <summary>
     /// Attempts to add a new key to the key chain.
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="key"></param>
+    /// <param name="item">The key vault item to add.</param>
     /// <returns></returns>
-    public bool TryToAddKey(string name, string key)
+    public bool TryToAddKey(KeyVaultItem item)
     {
-        if (!Keys.ContainsKey(name))
+        if (!Keys.ContainsKey(item.Name))
         {
-            Keys[name] = new KeyVaultItem(name, key);
+            Keys[item.Name] = item;
             return true;
         }
         return false;
+    }
+
+    /// <inheritdoc cref="TryToAddKey(KeyVaultItem)"/>
+    public bool TryToAddKey(string name, string key)
+    {
+        var newItem = new KeyVaultItem(name, key);
+        return TryToAddKey(newItem);
+    }
+
+    /// <summary>
+    /// Attempts to update an existing key in the key chain. If updating keys is not allowed, it will return false.
+    /// </summary>
+    /// <param name="item">The key vault item to update.</param>
+    /// <returns></returns>
+    public bool TryToUpdateKey(KeyVaultItem item)
+    {
+        if(AllowKeyUpdate == false)
+        {
+            return false; // Updating keys is not allowed
+        }
+
+        if (Keys.ContainsKey(item.Name))
+        {
+            Keys[item.Name] = item;
+            return true;
+        }
+        return false;
+    }
+
+    /// <inheritdoc cref="TryToUpdateKey(KeyVaultItem)"/>
+    public bool TryToUpdateKey(string name, string key)
+    {
+        var newItem = new KeyVaultItem(name, key);
+        return TryToUpdateKey(newItem);
+    }
+
+
+    /// <summary>
+    /// Attempts to add or update a key in the key chain. If updating keys is not allowed and the key already exists, it will return false.
+    /// </summary>
+    /// <param name="item">The key vault item to add or update.</param>
+    /// <returns>True if the key was added or updated; false otherwise.</returns>
+    public bool TryToUpsert(KeyVaultItem item)
+    {
+        if (AllowKeyUpdate == false && Keys.ContainsKey(item.Name))
+        {
+            return false; // Updating keys is not allowed
+        }
+
+        Keys[item.Name] = item;
+        return true;
+    }
+
+    /// <inheritdoc cref="TryToUpsert(KeyVaultItem)"/>
+    public bool TryToUpsert(string name, string key)
+    {
+        var newItem = new KeyVaultItem(name, key);
+        return TryToUpsert(newItem);
     }
 
     /// <summary>
