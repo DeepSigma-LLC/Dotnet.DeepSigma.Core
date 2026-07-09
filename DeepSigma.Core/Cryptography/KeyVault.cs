@@ -24,7 +24,7 @@ public class KeyVault
     /// <summary>
     /// The file path to the AES key file used for encryption and decryption of the key chain data.
     /// </summary>
-    public required string AesJsonKeyFilePath { get; init; }
+    public string AesJsonKeyFilePath { get; init; }
 
     /// <summary>
     /// The file path to the initialization vector (IV) file used for encryption and decryption of the key chain data.
@@ -36,18 +36,17 @@ public class KeyVault
     /// </summary>
     /// <param name="aesJsonKeyFilePath">Required AES key file path for encryption/decryption</param>
     /// <param name="keychain_full_file_path">Required file path for storing the key chain</param>
+    /// <param name="TextEncodingType">Optional encoding type for the AES key file (default is Base64)</param>
     /// <param name="overwriteFiles">Indicates whether to overwrite existing files</param>
-    [SetsRequiredMembers]
-    public KeyVault(string aesJsonKeyFilePath, string keychain_full_file_path, EncodingType keyTextEncodingType, bool overwriteFiles)
+    public KeyVault(string aesJsonKeyFilePath, string keychain_full_file_path, bool overwriteFiles, EncodingType TextEncodingType = EncodingType.Base64)
     {
         AesJsonKeyFilePath = aesJsonKeyFilePath;
         KeyChainFullFilePath = keychain_full_file_path;
         OverwriteFiles = overwriteFiles;
-        KeyTextEncodingType = keyTextEncodingType;
-        Exception? aes_valid = ValidateExistingFilePath(AesJsonKeyFilePath);
-        if(aes_valid != null)
+        Exception? aes_valid_file_path_error = ValidateExistingFilePath(AesJsonKeyFilePath);
+        if(aes_valid_file_path_error is not null)
         {
-            throw aes_valid;
+            throw aes_valid_file_path_error;
         }
         LoadAesKeyValues();
 
@@ -65,13 +64,14 @@ public class KeyVault
 
     private void LoadAesKeyValues()
     {
-        var (error, aesKey, iv) = CryptoUtilities.GetAesKeyAndIvFromFile(AesJsonKeyFilePath, KeyTextEncodingType);
+        var (error, aesKey, iv, encodingType) = CryptoUtilities.GetAesKeyAndIvFromFile(AesJsonKeyFilePath);
         if (error != null)
         {
             throw error; // Throwing the exception if the AES key file is invalid
         }
         AesKey = aesKey;
         IV = iv;
+        KeyTextEncodingType = encodingType ?? KeyTextEncodingType;
     }
 
     /// <summary>

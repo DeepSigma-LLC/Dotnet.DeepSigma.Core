@@ -151,13 +151,12 @@ public static class CryptoUtilities
     /// Reads the AES key and IV from the specified key file.
     /// </summary>
     /// <param name="jsonFilePath">The json file path of the AES key file.</param>
-    /// <param name="textEncodingType">The encoding type used in the AES key file.</param>
     /// <returns>A tuple containing an exception if an error occurs, the AES key, and the IV.</returns>
-    public static (Exception? error, byte[]? aesKey, byte[]? initializationVector) GetAesKeyAndIvFromFile(string jsonFilePath, EncodingType textEncodingType = EncodingType.Base64)
+    public static (Exception? error, byte[]? aesKey, byte[]? initializationVector, EncodingType? encodingType) GetAesKeyAndIvFromFile(string jsonFilePath)
     {
         if (jsonFilePath.IsNullOrEmpty() || Path.Exists(jsonFilePath) == false)
         {
-            return (new Exception($"AES key file path does not exist: {jsonFilePath}"), null, null);
+            return (new Exception($"AES key file path does not exist: {jsonFilePath}"), null, null, null);
         }
 
         string combinedKeyAndIv = File.ReadAllText(jsonFilePath);
@@ -166,12 +165,12 @@ public static class CryptoUtilities
 
         if (aesKeyFile == null)
         {
-            return (new Exception($"Failed to deserialize AES key file: {jsonFilePath}"), null, null);
+            return (new Exception($"Failed to deserialize AES key file: {jsonFilePath}"), null, null, null);
         }
 
-        byte[] aesKey = Encoder.DecodeFromString(aesKeyFile.Key, textEncodingType);
-        byte[] initializationVector = Encoder.DecodeFromString(aesKeyFile.InitializationVector, textEncodingType);
-        return (null, aesKey, initializationVector);
+        byte[] aesKey = Encoder.DecodeFromString(aesKeyFile.Key, aesKeyFile.Metadata.TextEncodingType);
+        byte[] initializationVector = Encoder.DecodeFromString(aesKeyFile.InitializationVector, aesKeyFile.Metadata.TextEncodingType);
+        return (null, aesKey, initializationVector, aesKeyFile.Metadata.TextEncodingType);
     }
 
     /// <summary>

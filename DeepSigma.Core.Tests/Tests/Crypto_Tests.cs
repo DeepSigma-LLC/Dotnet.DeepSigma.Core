@@ -1,6 +1,6 @@
 ﻿using Xunit;
 using System.Security.Cryptography;
-using DeepSigma.Core.Crypto;
+using DeepSigma.Core.Cryptography;
 
 namespace DeepSigma.Core.Tests.Tests;
 
