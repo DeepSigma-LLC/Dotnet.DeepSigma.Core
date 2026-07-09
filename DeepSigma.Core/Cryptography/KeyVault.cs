@@ -48,6 +48,7 @@ public class KeyVault
         AesJsonKeyFilePath = aesJsonKeyFilePath;
         KeyChainFullFilePath = keychain_full_file_path;
         OverwriteFiles = overwriteFiles;
+        AllowKeyUpdate = allowKeyUpdate;
         Exception? aes_valid_file_path_error = ValidateExistingFilePath(AesJsonKeyFilePath);
         if(aes_valid_file_path_error is not null)
         {
