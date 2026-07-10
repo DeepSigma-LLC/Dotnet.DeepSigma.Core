@@ -31,3 +31,28 @@ public enum CommonAesKeySizes
     /// </remarks>
     AES256 = 32
 }
+
+/// <summary>
+/// Provides extension methods for the CommonAesKeySizes enum.
+/// </summary>
+public static class CommonAesKeySizeExtensions
+{
+    extension(CommonAesKeySizes value)
+    {
+        /// <summary>
+        /// Converts the specified AES key size to its corresponding byte length.
+        /// </summary>
+        /// <returns>The byte length corresponding to the AES key size.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public int ToEquivalentByteSize() => value switch
+        {
+            CommonAesKeySizes.AES128 => 16,
+            CommonAesKeySizes.AES192 => 24,
+            CommonAesKeySizes.AES256 => 32,
+            _ => throw new ArgumentOutOfRangeException(
+                nameof(value),
+                value,
+                "Unsupported AES key size.")
+        };
+    }
+}
