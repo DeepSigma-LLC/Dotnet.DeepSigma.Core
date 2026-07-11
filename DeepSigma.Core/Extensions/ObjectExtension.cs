@@ -3,6 +3,7 @@ using DeepSigma.Core.Serialization;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace DeepSigma.Core.Extensions;
 
@@ -15,10 +16,16 @@ public static class ObjectExtension
     /// Convert an object to JSON string.
     /// </summary>
     /// <param name="value"></param>
-    public static string ToJSON<T>(this T value) where T : class
+    /// <param name="indented"></param>
+    /// <param name="options"></param>
+    public static string ToJson<T>(this T value, bool indented = false, JsonSerializerOptions? options = null) where T : class
     {
         ArgumentNullException.ThrowIfNull(value);
-        return JsonSerializer.GetSerializedString(value);
+        JsonSerializerOptions _json_options = options ?? new()
+        {
+            WriteIndented = indented, // human-readable on disk
+        };
+        return System.Text.Json.JsonSerializer.Serialize(value, _json_options);
     }
 
     /// <summary>
@@ -30,7 +37,7 @@ public static class ObjectExtension
     public static T? FromJson<T>(this string json) where T : class, new()
     {
         if(!json.IsValidJson()) return null;
-        return JsonSerializer.GetDeserializedObject<T>(json);
+        return DeepSigma.Core.Serialization.JsonSerializer.GetDeserializedObject<T>(json);
     }
 
     /// <summary>
@@ -200,8 +207,8 @@ public static class ObjectExtension
     public static T CloneDeep<T>(this T source) where T : class
     {
         ArgumentNullException.ThrowIfNull(source);
-        string serialized = JsonSerializer.GetSerializedString(source);
-        return JsonSerializer.GetDeserializedObject<T>(serialized)!;
+        string serialized = DeepSigma.Core.Serialization.JsonSerializer.GetSerializedString(source);
+        return DeepSigma.Core.Serialization.JsonSerializer.GetDeserializedObject<T>(serialized)!;
     }
 
     /// <summary>

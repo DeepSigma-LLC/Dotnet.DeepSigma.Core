@@ -62,7 +62,7 @@ public class DatabaseLogger : ILogger
             return;
         }
         LogCollection log = LogUtilities.GetLog(logLevel, eventId, state, exception);
-        string json = log.ToJSON();
+        string json = log.ToJson();
 
         if (_provider.Options.LogToDatabase is null)
         {

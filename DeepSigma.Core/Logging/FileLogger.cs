@@ -62,7 +62,7 @@ public class FileLogger : ILogger
         string full_file_path = Path.Combine(_provider.Options.FolderPath, new_file_name);
 
         LogCollection logs = LogUtilities.GetLog(logLevel, eventId, state, exception);
-        string json = logs.ToJSON();
+        string json = logs.ToJson(true);
 
         using var stream = new StreamWriter(full_file_path, false);
         stream.WriteLine(json);

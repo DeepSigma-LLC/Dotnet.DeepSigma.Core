@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace DeepSigma.Core.Serialization;
 
@@ -15,6 +16,18 @@ public static class JsonSerializer
     public static string GetSerializedString(object obj)
     {
         return JsonConvert.SerializeObject(obj);
+    }
+
+    /// <summary>
+    /// Serializes an object to a JSON string using System.Text.Json.
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    public static string GetSerializedString(object obj, JsonSerializerOptions? options = null)
+    {
+        options ??= new JsonSerializerOptions();
+        return System.Text.Json.JsonSerializer.Serialize(obj, options);
     }
 
     /// <summary>

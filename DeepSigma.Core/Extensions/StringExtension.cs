@@ -288,7 +288,7 @@ public static class StringExtension
         {
             try
             {
-                var obj = System.Text.Json.JsonDocument.Parse(jsonString);
+                var obj = JsonDocument.Parse(jsonString);
                 return true;
             }
             catch
