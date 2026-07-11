@@ -402,26 +402,4 @@ public static class StringExtension
             return (false, ex);
         }
     }
-
-    /// <summary>
-    /// Pretty prints a JSON string with indentation for better readability. If the input is not valid JSON, it returns the original string.
-    /// </summary>
-    /// <param name="json">The JSON string to be pretty printed.</param>
-    /// <returns>A pretty printed JSON string if valid; otherwise, the original string.</returns>
-    public static string PrettyPrintJson(this string json)
-    {
-        try
-        {
-            using JsonDocument document = JsonDocument.Parse(json);
-
-            return JsonSerializer.Serialize(document.RootElement, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
-        }
-        catch (JsonException)
-        {
-            return json;
-        }
-    }
 }
