@@ -77,6 +77,28 @@ public static class CryptoUtilities
     }
 
     /// <summary>
+    /// Encrypts the given data using the provided AES key and IV.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="key"></param>
+    /// <param name="iv"></param>
+    /// <returns></returns>
+    public static byte[] AESEncrypt(byte[] data, byte[] key, byte[] iv)
+    {
+        using Aes aes = Aes.Create();
+        aes.Key = key;
+        aes.IV = iv;
+
+        ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+        using MemoryStream ms = new();
+        using CryptoStream cs = new(ms, encryptor, CryptoStreamMode.Write);
+        cs.Write(data, 0, data.Length);
+        cs.FlushFinalBlock();
+        return ms.ToArray();
+    }
+
+
+    /// <summary>
     /// Decrypts the given cipher text using the provided AES key and IV.
     /// </summary>
     /// <param name="cipher_text"></param>

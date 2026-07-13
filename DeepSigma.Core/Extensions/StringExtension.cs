@@ -1,6 +1,7 @@
 ﻿
 using System.Globalization;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -346,13 +347,14 @@ public static class StringExtension
     /// Gets file extention from end of string if string is a file name.
     /// </summary>
     /// <param name="value"></param>
+    /// <param name="includeDot">Whether to include the dot in the returned extension.</param>
     /// <returns></returns>
-    public static string? GetFileExtention(this string value)
+    public static string? GetFileExtention(this string value, bool includeDot = false)
     {
         string[] strings = value.Split('.');
 
         if (strings.Length <= 1) return null;
-        return strings[^1];
+        return includeDot ? "." + strings[^1] : strings[^1];
     }
 
     /// <summary>
@@ -401,5 +403,23 @@ public static class StringExtension
             result = default;
             return (false, ex);
         }
+    }
+
+    /// <summary>
+    /// Reformats an existing JSON string with indentation.
+    /// </summary>
+    /// <param name="json">A string already containing JSON.</param>
+    /// <returns>The same JSON, indented.</returns>
+    public static string? ToJsonHumanReadable(this string json)
+    {
+        if (json.IsNullOrWhiteSpace()) return null;
+        if (!json.IsValidJson()) return null;
+
+        using var doc = JsonDocument.Parse(json);
+        return JsonSerializer.Serialize(doc, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        });
     }
 }
