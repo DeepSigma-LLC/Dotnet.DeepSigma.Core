@@ -1,10 +1,9 @@
-﻿
-namespace DeepSigma.Core.Cryptography;
+﻿namespace DeepSigma.Core.Cryptography.Symmetric;
 
 /// <summary>
 /// Represents common AES key sizes in bytes.
 /// </summary>
-public enum CommonAesKeySizes
+public enum AesCommonKeySizes
 {
     /// <summary>
     /// Represents the AES-128 key size, which is 16 bytes (128 bits).
@@ -33,11 +32,11 @@ public enum CommonAesKeySizes
 }
 
 /// <summary>
-/// Provides extension methods for the CommonAesKeySizes enum.
+/// Provides extension methods for the AesCommonKeySizes enum.
 /// </summary>
-public static class CommonAesKeySizeExtensions
+public static class AesCommonKeySizeExtensions
 {
-    extension(CommonAesKeySizes value)
+    extension(AesCommonKeySizes value)
     {
         /// <summary>
         /// Converts the specified AES key size to its corresponding byte length.
@@ -46,9 +45,9 @@ public static class CommonAesKeySizeExtensions
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public int ToEquivalentByteSize() => value switch
         {
-            CommonAesKeySizes.AES128 => 16,
-            CommonAesKeySizes.AES192 => 24,
-            CommonAesKeySizes.AES256 => 32,
+            AesCommonKeySizes.AES128 => 16,
+            AesCommonKeySizes.AES192 => 24,
+            AesCommonKeySizes.AES256 => 32,
             _ => throw new ArgumentOutOfRangeException(
                 nameof(value),
                 value,

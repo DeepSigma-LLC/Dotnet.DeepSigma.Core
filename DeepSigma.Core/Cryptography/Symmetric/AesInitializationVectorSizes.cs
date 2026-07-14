@@ -1,5 +1,4 @@
-﻿
-namespace DeepSigma.Core.Cryptography;
+﻿namespace DeepSigma.Core.Cryptography.Symmetric;
 
 
 /// <summary>

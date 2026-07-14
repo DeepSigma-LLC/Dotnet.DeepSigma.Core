@@ -70,13 +70,12 @@ public class KeyVault
 
     private void LoadAesKeyValues()
     {
-        var (error, aesKey, iv, encodingType) = CryptoUtilities.GetAesKeyAndIvFromFile(AesJsonKeyFilePath);
+        var (error, aesKey, encodingType) = Symmetric.AesCryptography.GetAesKeyFromFile(AesJsonKeyFilePath);
         if (error != null)
         {
             throw error; // Throwing the exception if the AES key file is invalid
         }
         AesKey = aesKey;
-        IV = iv;
         KeyTextEncodingType = encodingType ?? KeyTextEncodingType;
     }
 
@@ -220,7 +219,7 @@ public class KeyVault
     private void ExportToFile(string full_file_path, bool overwrite)
     {
         string text = JsonSerializer.GetSerializedString(Keys);
-        byte[] encrypted_data = CryptoUtilities.AESEncrypt(text, AesKey!, IV!);
+        byte[] encrypted_data = Symmetric.AesCryptography.AESEncrypt(text, AesKey!);
         if (overwrite || !File.Exists(full_file_path))
         {
             File.WriteAllBytes(full_file_path, encrypted_data);
@@ -240,7 +239,7 @@ public class KeyVault
 
         byte[] encryptedBytes = File.ReadAllBytes(KeyChainFullFilePath!);
 
-        string json_text = CryptoUtilities.AESDecrypt(encryptedBytes, AesKey!, IV!);
+        string json_text = Encoder.EncodeToString(Symmetric.AesCryptography.AESDecrypt(encryptedBytes, AesKey!), KeyTextEncodingType);
         var deserialized_results = JsonSerializer.GetDeserializedObject<Dictionary<string, KeyVaultItem>>(json_text);
         deserialized_results?.ForEach(x => Keys[x.Key] = x.Value); // Loop through the deserialized results and add to dict. Maintains string comparison rules by using StringComparer.OrdinalIgnoreCase in the dictionary initialization.
         return null;
