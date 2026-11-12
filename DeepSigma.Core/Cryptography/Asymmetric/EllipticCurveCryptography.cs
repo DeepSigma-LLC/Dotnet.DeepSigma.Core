@@ -53,8 +53,9 @@ public static class EllipticCurveCryptography
     /// <param name="signature">The signature to verify.</param>
     /// <param name="publicKey">The ECDsa public key to use for verification.</param>
     /// <param name="hashAlgorithm">The hash algorithm to use for verification.</param>
+    /// <param name="dSASignatureFormat">The signature format to use. Defaults to Rfc3279DerSequence.</param>
     /// <returns></returns>
-    public static bool Verify(byte[] data, byte[] signature, ECDsa publicKey, HashAlgorithmName? hashAlgorithm = null)
+    public static bool Verify(byte[] data, byte[] signature, ECDsa publicKey, HashAlgorithmName? hashAlgorithm = null, DSASignatureFormat? dSASignatureFormat = null)
     {
         ArgumentNullException.ThrowIfNull(publicKey);
         ArgumentNullException.ThrowIfNull(data);
@@ -62,7 +63,7 @@ public static class EllipticCurveCryptography
 
         try
         {
-            return publicKey.VerifyData(data, signature, hashAlgorithm ?? HashAlgorithmName.SHA256);
+            return publicKey.VerifyData(data, signature, hashAlgorithm ?? HashAlgorithmName.SHA256, dSASignatureFormat ?? DSASignatureFormat.Rfc3279DerSequence);
         }
         catch (CryptographicException)
         {

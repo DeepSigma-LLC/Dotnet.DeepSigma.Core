@@ -154,38 +154,44 @@ public class QueuedService_Tests
         queue.TryEnqueue(2);
         queue.TryEnqueue(3);
 
-        using var cts = new CancellationTokenSource();
+        var processedAllItems = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var reader = new BackgroundMessageQueueReaderService<int>(queue, item =>
         {
             processed.Add(item);
             if (processed.Count == 3)
-                cts.Cancel();
+                processedAllItems.TrySetResult();
         });
 
         await reader.StartAsync(CancellationToken.None);
 
-        await Task.Delay(500); // allow the background loop to drain
-
-        await reader.StopAsync(CancellationToken.None);
+        try
+        {
+            await processedAllItems.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        }
+        finally
+        {
+            await reader.StopAsync(CancellationToken.None);
+        }
 
         Assert.Equal([1, 2, 3], processed);
     }
 
     [Fact]
-    public async Task QueueReaderService_StopsCleanlyOnCancellation()
+    public async Task QueueReaderService_StopsCleanly()
     {
-        var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
-        var processed = new List<int>();
-
-        using var cts = new CancellationTokenSource();
-        var reader = new BackgroundMessageQueueReaderService<int>(queue, item => processed.Add(item));
+        var queue = BackgroundMessageQueue<int>.CreateBounded(
+            capacity: 2,
+            singleReader: true,
+            singleWriter: true,
+            fullMode: BoundedChannelFullMode.Wait);
+        var reader = new BackgroundMessageQueueReaderService<int>(queue, _ => { });
 
         await reader.StartAsync(CancellationToken.None);
-        await cts.CancelAsync();
         await reader.StopAsync(CancellationToken.None);
 
-        // No exception thrown and service stopped cleanly
-        Assert.True(true);
+        Assert.True(queue.TryEnqueue(42));
+        Assert.Equal(1, queue.Count());
+        Assert.Equal(42, await queue.DequeueAsync());
     }
 
     [Fact]
@@ -193,7 +199,7 @@ public class QueuedService_Tests
     {
         var queue = BackgroundMessageQueue<int>.CreateUnbounded(singleReader: true, singleWriter: true);
         var processed = new List<int>();
-        var tcs = new TaskCompletionSource();
+        var tcs = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
 
         var reader = new BackgroundMessageQueueReaderService<int>(queue, item =>
         {
@@ -207,8 +213,14 @@ public class QueuedService_Tests
         queue.TryEnqueue(100);
         queue.TryEnqueue(200);
 
-        await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        await reader.StopAsync(CancellationToken.None);
+        try
+        {
+            await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        }
+        finally
+        {
+            await reader.StopAsync(CancellationToken.None);
+        }
 
         Assert.Equal([100, 200], processed);
     }

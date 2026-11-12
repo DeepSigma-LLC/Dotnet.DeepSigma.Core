@@ -354,7 +354,7 @@ public class SelfAligningTimeStepper_Tests
     public void Test_Monthly_Steps_WeekendsOnly_AdjustForward()
     {
         PeriodicityConfiguration configuration = new(Enums.Periodicity.Monthly, Enums.DaySelectionType.Weekend);
-        TimeStepperConfiguration timeStepperConfiguration = new(configuration, DateAdjustmentType.MoveBackward);
+        TimeStepperConfiguration timeStepperConfiguration = new(configuration, DateAdjustmentType.MoveForward);
         SelfAligningTimeStepper<DateTimeCustom> stepper = new(timeStepperConfiguration);
 
         DateTimeCustom expected = new DateTime(2024, 3, 31).WeekendOrNext();

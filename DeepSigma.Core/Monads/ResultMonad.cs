@@ -1,5 +1,4 @@
-﻿using OneOf;
-
+﻿
 namespace DeepSigma.Core.Monads;
 
 /// <summary>
@@ -7,37 +6,29 @@ namespace DeepSigma.Core.Monads;
 ///
 /// Usage example:
 /// <code>
-///   var result = new Success&lt;string&gt;("ok");
-///
-///   // Match on Monad&lt;T&gt; to get a single value.
-///   string msg = result.Match(
-///       success   => $"Success: {success.Result}",
-///       errors    => $"Errors: {string.Join(", ", errors.Exceptions.Select(e => e.FriendlyMessage))}");
-///
-///   // Switching on Monad&lt;T&gt; to deal with side effects.
-///   result.Switch(
-///       success => Console.WriteLine($"Success: {success.Result}"),
-///       errors  => Console.WriteLine($"Errors: {string.Join(", ", errors.Exceptions.Select(e => e.FriendlyMessage))}"));
+/// Exception? error = DoSomething();
+/// ResultMonad&lt;T&gt; result = error is null
+///    ? new SuccessResult&lt;T&gt;(default)
+///    : new ErrorResult(error);
+/// string value = result switch
+/// {
+///     SuccessResult&lt;T&gt; success => $"Success: {success.Result}",
+///     ErrorResult err => $"Error: {err.Exception.Message}"
+/// };
 /// </code>
 /// </summary>
 /// <typeparam name="T">The wrapped success value type.</typeparam>
-public class ResultMonad<T> : OneOfBase<Success<T>, Error>
+public readonly union ResultMonad<T>(SuccessResult<T>, ErrorResult)
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ResultMonad{T}"/> class with a successful result.
     /// </summary>
-    /// <param name="input"></param>
-    public ResultMonad(OneOf<Success<T>, Error> input) : base(input) { }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ResultMonad{T}"/> class with a successful result.
-    /// </summary>
     /// <param name="success"></param>
-    public static implicit operator ResultMonad<T>(Success<T> success) => new(success);
+    public static implicit operator ResultMonad<T>(SuccessResult<T> success) => new(success);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResultMonad{T}"/> class with an error.
     /// </summary>
     /// <param name="error"></param>
-    public static implicit operator ResultMonad<T>(Error error) => new(error);
+    public static implicit operator ResultMonad<T>(ErrorResult error) => new(error);
 }

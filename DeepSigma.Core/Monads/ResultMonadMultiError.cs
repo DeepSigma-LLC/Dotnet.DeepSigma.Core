@@ -1,5 +1,4 @@
-﻿using OneOf;
-
+﻿
 namespace DeepSigma.Core.Monads;
 
 /// <summary>
@@ -7,37 +6,29 @@ namespace DeepSigma.Core.Monads;
 ///
 /// Usage example:
 /// <code>
-///   var result = new Success&lt;string&gt;("ok");
-///
-///   // Match on Monad&lt;T&gt; to get a single value.
-///   string msg = result.Match(
-///       success   => $"Success: {success.Result}",
-///       errors    => $"Errors: {string.Join(", ", errors.Exceptions.Select(e => e.FriendlyMessage))}");
-///
-///   // Switching on Monad&lt;T&gt; to deal with side effects.
-///   result.Switch(
-///       success => Console.WriteLine($"Success: {success.Result}"),
-///       errors  => Console.WriteLine($"Errors: {string.Join(", ", errors.Exceptions.Select(e => e.FriendlyMessage))}"));
+/// List&lt;Exception&gt;? errors = DoSomething();
+/// ResultMonadMultiError&lt;T&gt; result = errors is null
+///    ? new SuccessResult&lt;T&gt;(default)
+///    : new ErrorResults(errors);
+/// string value = result switch
+/// {
+///     SuccessResult&lt;T&gt; success => $"Success: {success.Result}",
+///     ErrorResults err => $"Errors: {string.Join(", ", err.Exceptions.Select(e => e.FriendlyMessage))}"
+/// };
 /// </code>
 /// </summary>
 /// <typeparam name="T">The wrapped success value type.</typeparam>
-public class ResultMonadMultiError<T> : OneOfBase<Success<T>, Errors>
+public readonly union ResultMonadMultiError<T>(SuccessResult<T>, ErrorResults)
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="ResultMonadMultiError{T}"/> class with a successful result.
     /// </summary>
-    /// <param name="input"></param>
-    public ResultMonadMultiError(OneOf<Success<T>, Errors> input) : base(input) { }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ResultMonadMultiError{T}"/> class with a successful result.
-    /// </summary>
     /// <param name="success"></param>
-    public static implicit operator ResultMonadMultiError<T>(Success<T> success) => new(success);
+    public static implicit operator ResultMonadMultiError<T>(SuccessResult<T> success) => new(success);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResultMonadMultiError{T}"/> class with errors.
     /// </summary>
     /// <param name="errors"></param>
-    public static implicit operator ResultMonadMultiError<T>(Errors errors) => new(errors);
+    public static implicit operator ResultMonadMultiError<T>(ErrorResults errors) => new(errors);
 }
